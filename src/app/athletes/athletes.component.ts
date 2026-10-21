@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Athlete } from '../model/athlete.model';
+import { AthleteService } from '../services/athlete.service';
 
 @Component({
   selector: 'app-athletes',
@@ -9,10 +11,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './athletes.component.css'
 })
 export class AthletesComponent implements OnInit {
-  athletes: string[]; // un tableau de chaînes de caractères
+  athletes: Athlete[]; // un tableau de Athlete
 
-  constructor() {
-    this.athletes = ["Mohamed Ali", "Ons Jabeur", "Cristiano Ronaldo", "Kylian Mbappé"];
+  constructor(private athleteService: AthleteService) {
+    this.athletes = athleteService.listeAthletes();
   }
 
   ngOnInit(): void {

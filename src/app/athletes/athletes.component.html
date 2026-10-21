@@ -4,16 +4,28 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Liste des Athlètes</th>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Nationalité</th>
+            <th>Sport</th>
+            <th>Date Naissance</th>
           </tr>
         </thead>
-        @for (athlete of athletes; track athlete) {
-          <tbody>
+        <tbody>
+          @for (athlete of athletes; track athlete.idAthlete) {
             <tr>
-              <td>{{athlete}}</td>
+              <td>{{athlete.idAthlete}}</td>
+              <td>{{athlete.nomComplet}}</td>
+              <td>{{athlete.nationalite}}</td>
+              <td>{{athlete.sport}}</td>
+              <td>{{athlete.dateNaissance | date:'dd/MM/yyyy'}}</td>
             </tr>
-          </tbody>
-        }
+          } @empty {
+            <tr>
+              <td colspan="5" class="text-center text-danger fw-bold">Aucun athlète trouvé !</td>
+            </tr>
+          }
+        </tbody>
       </table>
     </div>
   </div>
