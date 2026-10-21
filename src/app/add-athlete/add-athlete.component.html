@@ -28,6 +28,15 @@
           <input type="date" [(ngModel)]="newAthlete.dateNaissance" name="dateNaissance" class="form-control">
         </div>
 
+        <div class="col-sm-4 col-md-4 col-lg-4 mb-3">
+          <label class="form-label">Équipe</label>
+          <select class="form-control form-control-lg" id="codeEquipe" name="codeEquipe" [(ngModel)]="newCodeEquipe">
+            @for (eq of equipes; track eq.codeEquipe) {
+              <option [value]="eq.codeEquipe">{{eq.nomEquipe}}</option>
+            }
+          </select>
+        </div>
+
         <div class="mt-3">
           <button type="button" (click)="addAthlete()" class="btn btn-success">Ajouter</button>
         </div>

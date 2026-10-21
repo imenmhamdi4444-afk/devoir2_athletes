@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Athlete } from '../model/athlete.model';
+import { Equipe } from '../model/equipe.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AthleteService } from '../services/athlete.service';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +15,8 @@ import { CommonModule } from '@angular/common';
 })
 export class UpdateAthleteComponent implements OnInit {
   currentAthlete = new Athlete();
+  equipes!: Equipe[];
+  updatedCodeEquipe!: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,13 +25,16 @@ export class UpdateAthleteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.equipes = this.athleteService.listeEquipes();
     this.currentAthlete = this.athleteService.consulterAthlete(
       this.activatedRoute.snapshot.params['id']
     );
+    this.updatedCodeEquipe = this.currentAthlete.equipe ? this.currentAthlete.equipe.codeEquipe : 1;
     console.log(this.currentAthlete);
   }
 
   updateAthlete(): void {
+    this.currentAthlete.equipe = this.athleteService.consulterEquipe(this.updatedCodeEquipe);
     this.athleteService.updateAthlete(this.currentAthlete);
     this.router.navigate(['athletes']);
   }

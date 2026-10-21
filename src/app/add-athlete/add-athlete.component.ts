@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Athlete } from '../model/athlete.model';
+import { Equipe } from '../model/equipe.model';
 import { AthleteService } from '../services/athlete.service';
 
 @Component({
@@ -14,13 +15,19 @@ import { AthleteService } from '../services/athlete.service';
 })
 export class AddAthleteComponent implements OnInit {
   newAthlete = new Athlete();
+  equipes!: Equipe[];
+  newCodeEquipe!: number;
+  newEquipe!: Equipe;
 
   constructor(private athleteService: AthleteService, private router: Router) { }
 
   ngOnInit(): void {
+    this.equipes = this.athleteService.listeEquipes();
   }
 
   addAthlete(): void {
+    this.newEquipe = this.athleteService.consulterEquipe(this.newCodeEquipe);
+    this.newAthlete.equipe = this.newEquipe;
     this.athleteService.ajouterAthlete(this.newAthlete);
     this.router.navigate(['athletes']);
   }
