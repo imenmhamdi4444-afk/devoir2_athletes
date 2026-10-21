@@ -9,6 +9,7 @@
             <th>Nationalité</th>
             <th>Sport</th>
             <th>Date Naissance</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -19,10 +20,14 @@
               <td>{{athlete.nationalite}}</td>
               <td>{{athlete.sport}}</td>
               <td>{{athlete.dateNaissance | date:'dd/MM/yyyy'}}</td>
+              <td>
+                <a class="btn btn-danger btn-sm me-2" (click)="supprimerAthlete(athlete)">Supprimer</a>
+                <a class="btn btn-success btn-sm" [routerLink]="['/updateAthlete', athlete.idAthlete]">Modifier</a>
+              </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="5" class="text-center text-danger fw-bold">Aucun athlète trouvé !</td>
+              <td colspan="6" class="text-center text-danger fw-bold">Aucun athlète trouvé !</td>
             </tr>
           }
         </tbody>

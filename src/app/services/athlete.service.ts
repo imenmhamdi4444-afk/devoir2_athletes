@@ -6,6 +6,7 @@ import { Athlete } from '../model/athlete.model';
 })
 export class AthleteService {
   athletes: Athlete[];
+  athlete!: Athlete;
 
   constructor() {
     this.athletes = [
@@ -22,5 +23,25 @@ export class AthleteService {
 
   ajouterAthlete(athlete: Athlete): void {
     this.athletes.push(athlete);
+  }
+
+  supprimerAthlete(athlete: Athlete): void {
+    const index = this.athletes.indexOf(athlete, 0);
+    if (index > -1) {
+      this.athletes.splice(index, 1);
+    }
+  }
+
+  consulterAthlete(id: number): Athlete {
+    this.athlete = this.athletes.find(a => a.idAthlete == id)!;
+    return this.athlete;
+  }
+
+  updateAthlete(athlete: Athlete): void {
+    const index = this.athletes.findIndex(a => a.idAthlete == athlete.idAthlete);
+    if (index > -1) {
+      this.athletes.splice(index, 1);
+      this.athletes.splice(index, 0, athlete);
+    }
   }
 }
