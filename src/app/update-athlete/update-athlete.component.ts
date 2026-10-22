@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class UpdateAthleteComponent implements OnInit {
   currentAthlete = new Athlete();
   equipes!: Equipe[];
-  updatedCodeEquipe!: number;
+  updatedCodeEquipe: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -29,12 +29,15 @@ export class UpdateAthleteComponent implements OnInit {
     this.currentAthlete = this.athleteService.consulterAthlete(
       this.activatedRoute.snapshot.params['id']
     );
-    this.updatedCodeEquipe = this.currentAthlete.equipe ? this.currentAthlete.equipe.codeEquipe : 1;
-    console.log(this.currentAthlete);
+    this.updatedCodeEquipe = this.currentAthlete.equipe ? this.currentAthlete.equipe.codeEquipe : 0;
   }
 
   updateAthlete(): void {
-    this.currentAthlete.equipe = this.athleteService.consulterEquipe(this.updatedCodeEquipe);
+    if (this.updatedCodeEquipe && this.updatedCodeEquipe != 0) {
+      this.currentAthlete.equipe = this.athleteService.consulterEquipe(this.updatedCodeEquipe);
+    } else {
+      this.currentAthlete.equipe = undefined;
+    }
     this.athleteService.updateAthlete(this.currentAthlete);
     this.router.navigate(['athletes']);
   }

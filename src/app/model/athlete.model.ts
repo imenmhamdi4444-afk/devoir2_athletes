@@ -6,5 +6,5 @@ export class Athlete {
   nationalite!: string;
   sport!: string;
   dateNaissance!: Date;
-  equipe!: Equipe;
+  equipe?: Equipe;
 }

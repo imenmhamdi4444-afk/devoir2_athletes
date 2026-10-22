@@ -32,8 +32,8 @@ export class AthleteService {
         nomComplet: "Ons Jabeur",
         nationalite: "Tunisienne",
         sport: "Tennis",
-        dateNaissance: new Date("08/28/1994"),
-        equipe: { codeEquipe: 1, nomEquipe: "Club Africain" }
+        dateNaissance: new Date("08/28/1994")
+        // Sans équipe (sport individuel)
       },
       {
         idAthlete: 3,
@@ -86,7 +86,7 @@ export class AthleteService {
     return this.equipes;
   }
 
-  consulterEquipe(id: number): Equipe {
-    return this.equipes.find(eq => eq.codeEquipe == id)!;
+  consulterEquipe(id: number): Equipe | undefined {
+    return this.equipes.find(eq => eq.codeEquipe == id);
   }
 }

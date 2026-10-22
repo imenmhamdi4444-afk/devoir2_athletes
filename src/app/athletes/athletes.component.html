@@ -21,7 +21,7 @@
               <td>{{athlete.nationalite}}</td>
               <td>{{athlete.sport}}</td>
               <td>{{athlete.dateNaissance | date:'dd/MM/yyyy'}}</td>
-              <td>{{athlete.equipe.nomEquipe}}</td>
+              <td>{{athlete.equipe ? athlete.equipe.nomEquipe : 'Sans équipe'}}</td>
               <td>
                 <a class="btn btn-danger btn-sm me-2" (click)="supprimerAthlete(athlete)">Supprimer</a>
                 <a class="btn btn-success btn-sm" [routerLink]="['/updateAthlete', athlete.idAthlete]">Modifier</a>

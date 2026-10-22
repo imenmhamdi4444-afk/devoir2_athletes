@@ -16,8 +16,8 @@ import { AthleteService } from '../services/athlete.service';
 export class AddAthleteComponent implements OnInit {
   newAthlete = new Athlete();
   equipes!: Equipe[];
-  newCodeEquipe!: number;
-  newEquipe!: Equipe;
+  newCodeEquipe: number = 0;
+  newEquipe?: Equipe;
 
   constructor(private athleteService: AthleteService, private router: Router) { }
 
@@ -26,8 +26,12 @@ export class AddAthleteComponent implements OnInit {
   }
 
   addAthlete(): void {
-    this.newEquipe = this.athleteService.consulterEquipe(this.newCodeEquipe);
-    this.newAthlete.equipe = this.newEquipe;
+    if (this.newCodeEquipe && this.newCodeEquipe != 0) {
+      this.newEquipe = this.athleteService.consulterEquipe(this.newCodeEquipe);
+      this.newAthlete.equipe = this.newEquipe;
+    } else {
+      this.newAthlete.equipe = undefined;
+    }
     this.athleteService.ajouterAthlete(this.newAthlete);
     this.router.navigate(['athletes']);
   }
