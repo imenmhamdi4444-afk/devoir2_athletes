@@ -22,8 +22,8 @@ export class AddAthleteComponent implements OnInit {
 
   ngOnInit(): void {
     this.athleteService.listeEquipes().subscribe(eqs => {
-      this.equipes = eqs;
       console.log(eqs);
+      this.equipes = eqs._embedded.equipes;
     });
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Athlete } from '../model/athlete.model';
 import { Equipe } from '../model/equipe.model';
+import { EquipeWrapper } from '../model/equipeWrapped.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -13,6 +14,7 @@ const httpOptions = {
 })
 export class AthleteService {
   apiURL: string = 'http://localhost:8084/athletes/api';
+  apiURLEq: string = 'http://localhost:8084/athletes/eq';
 
   constructor(private http: HttpClient) { }
 
@@ -38,12 +40,12 @@ export class AthleteService {
     return this.http.put<Athlete>(this.apiURL, athlete, httpOptions);
   }
 
-  listeEquipes(): Observable<Equipe[]> {
-    return this.http.get<Equipe[]>(this.apiURL + "/eq");
+  listeEquipes(): Observable<EquipeWrapper> {
+    return this.http.get<EquipeWrapper>(this.apiURLEq);
   }
 
   consulterEquipe(id: number): Observable<Equipe> {
-    const url = `${this.apiURL}/eq/${id}`;
+    const url = `${this.apiURLEq}/${id}`;
     return this.http.get<Equipe>(url);
   }
 }

@@ -26,8 +26,8 @@ export class UpdateAthleteComponent implements OnInit {
 
   ngOnInit(): void {
     this.athleteService.listeEquipes().subscribe(eqs => {
-      this.equipes = eqs;
       console.log(eqs);
+      this.equipes = eqs._embedded.equipes;
     });
 
     this.athleteService.consulterAthlete(this.activatedRoute.snapshot.params['id'])
