@@ -12,19 +12,28 @@ import { AthleteService } from '../services/athlete.service';
   styleUrl: './athletes.component.css'
 })
 export class AthletesComponent implements OnInit {
-  athletes: Athlete[];
+  athletes: Athlete[] = [];
 
-  constructor(private athleteService: AthleteService) {
-    this.athletes = athleteService.listeAthletes();
-  }
+  constructor(private athleteService: AthleteService) { }
 
   ngOnInit(): void {
+    this.chargerAthletes();
+  }
+
+  chargerAthletes(): void {
+    this.athleteService.listeAthletes().subscribe(athletes => {
+      console.log(athletes);
+      this.athletes = athletes;
+    });
   }
 
   supprimerAthlete(athlete: Athlete): void {
     let conf = confirm("Etes-vous sûr ?");
     if (conf) {
-      this.athleteService.supprimerAthlete(athlete);
+      this.athleteService.supprimerAthlete(athlete.idAthlete).subscribe(() => {
+        console.log("athlète supprimé");
+        this.chargerAthletes();
+      });
     }
   }
 }

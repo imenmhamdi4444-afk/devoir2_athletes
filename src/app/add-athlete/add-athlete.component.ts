@@ -15,24 +15,27 @@ import { AthleteService } from '../services/athlete.service';
 })
 export class AddAthleteComponent implements OnInit {
   newAthlete = new Athlete();
-  equipes!: Equipe[];
+  equipes: Equipe[] = [];
   newCodeEquipe: number = 0;
-  newEquipe?: Equipe;
 
   constructor(private athleteService: AthleteService, private router: Router) { }
 
   ngOnInit(): void {
-    this.equipes = this.athleteService.listeEquipes();
+    this.athleteService.listeEquipes().subscribe(eqs => {
+      this.equipes = eqs;
+      console.log(eqs);
+    });
   }
 
   addAthlete(): void {
     if (this.newCodeEquipe && this.newCodeEquipe != 0) {
-      this.newEquipe = this.athleteService.consulterEquipe(this.newCodeEquipe);
-      this.newAthlete.equipe = this.newEquipe;
+      this.newAthlete.equipe = this.equipes.find(eq => eq.codeEquipe == this.newCodeEquipe);
     } else {
       this.newAthlete.equipe = undefined;
     }
-    this.athleteService.ajouterAthlete(this.newAthlete);
-    this.router.navigate(['athletes']);
+    this.athleteService.ajouterAthlete(this.newAthlete).subscribe(ath => {
+      console.log(ath);
+      this.router.navigate(['athletes']);
+    });
   }
 }

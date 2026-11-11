@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class UpdateAthleteComponent implements OnInit {
   currentAthlete = new Athlete();
-  equipes!: Equipe[];
+  equipes: Equipe[] = [];
   updatedCodeEquipe: number = 0;
 
   constructor(
@@ -25,20 +25,26 @@ export class UpdateAthleteComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.equipes = this.athleteService.listeEquipes();
-    this.currentAthlete = this.athleteService.consulterAthlete(
-      this.activatedRoute.snapshot.params['id']
-    );
-    this.updatedCodeEquipe = this.currentAthlete.equipe ? this.currentAthlete.equipe.codeEquipe : 0;
+    this.athleteService.listeEquipes().subscribe(eqs => {
+      this.equipes = eqs;
+      console.log(eqs);
+    });
+
+    this.athleteService.consulterAthlete(this.activatedRoute.snapshot.params['id'])
+      .subscribe(ath => {
+        this.currentAthlete = ath;
+        this.updatedCodeEquipe = this.currentAthlete.equipe ? this.currentAthlete.equipe.codeEquipe : 0;
+      });
   }
 
   updateAthlete(): void {
     if (this.updatedCodeEquipe && this.updatedCodeEquipe != 0) {
-      this.currentAthlete.equipe = this.athleteService.consulterEquipe(this.updatedCodeEquipe);
+      this.currentAthlete.equipe = this.equipes.find(eq => eq.codeEquipe == this.updatedCodeEquipe);
     } else {
       this.currentAthlete.equipe = undefined;
     }
-    this.athleteService.updateAthlete(this.currentAthlete);
-    this.router.navigate(['athletes']);
+    this.athleteService.updateAthlete(this.currentAthlete).subscribe(() => {
+      this.router.navigate(['athletes']);
+    });
   }
 }
