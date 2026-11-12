@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+    <label>Équipes</label>
+    <select class="form-control form-control-lg" id="idEquipe" name="idEquipe"
+      [(ngModel)]="idEquipe" (change)="onChange()">
+      @for (eq of equipes; track eq.codeEquipe) {
+        <option value="{{eq.codeEquipe}}">{{eq.nomEquipe}}</option>
+      }
+    </select>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Nationalité</th>
+            <th>Sport</th>
+            <th>Date Naissance</th>
+            <th>Équipe</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (athlete of athletes; track athlete.idAthlete) {
+            <tr>
+              <td>{{athlete.idAthlete}}</td>
+              <td>{{athlete.nomComplet}}</td>
+              <td>{{athlete.nationalite}}</td>
+              <td>{{athlete.sport}}</td>
+              <td>{{athlete.dateNaissance | date:'dd/MM/yyyy'}}</td>
+              @if (athlete.equipe) {
+                <td>{{athlete.equipe.nomEquipe}}</td>
+              } @else {
+                <td>Individuel</td>
+              }
+              <!-- <td><a class="btn btn-danger" (click)="supprimerAthlete(athlete)">Supprimer</a></td>
+                   <td><a class="btn btn-success" [routerLink]="['/updateAthlete', athlete.idAthlete]">Modifier</a></td> -->
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="text-center text-danger fw-bold">Aucun athlète trouvé !</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

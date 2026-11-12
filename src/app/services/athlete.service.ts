@@ -50,6 +50,18 @@ export class AthleteService {
     return this.http.get<Equipe>(url);
   }
 
+  // Atelier 07 - Recherche par équipe
+  rechercherParEquipe(codeEquipe: number): Observable<Athlete[]> {
+    const url = `${this.apiURL}/athletesequipe/${codeEquipe}`;
+    return this.http.get<Athlete[]>(url);
+  }
+
+  // Atelier 07 - Recherche par nom
+  rechercherParNom(nom: string): Observable<Athlete[]> {
+    const url = `${this.apiURL}/athletesByName/${nom}`;
+    return this.http.get<Athlete[]>(url);
+  }
+
   rechercherAthletes(nom: string): Observable<any> {
     const url = `${this.apiURLRest}/search/findByNomCompletContains?nom=${nom}`;
     return this.http.get<any>(url);

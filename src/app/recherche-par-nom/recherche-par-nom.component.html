@@ -1,0 +1,49 @@
+<div class="container">
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2 mt-2">
+      <label>Nom Athlète</label>
+      <input class="form-control" [(ngModel)]="nomAthlete" name="nomAthlete">
+      <button class="btn btn-primary ml-2" (click)="rechercherAthletes()">Rechercher</button>
+    </div>
+  </form>
+
+  <form class="form-inline">
+    <div class="form-group mx-sm-3 mb-2 mt-2">
+      <label>Nom Athlète en tapant</label>
+      <input #nom [(ngModel)]="searchTerm" name="searchTerm" class="form-control">
+    </div>
+  </form>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <tr>
+          <th>Id</th>
+          <th>Nom</th>
+          <th>Nationalité</th>
+          <th>Sport</th>
+          <th>Date Naissance</th>
+          <th>Équipe</th>
+        </tr>
+        @for (athlete of athletes | searchFilter:searchTerm; track athlete.idAthlete) {
+          <tbody>
+            <tr>
+              <td>{{athlete.idAthlete}}</td>
+              <td>{{athlete.nomComplet}}</td>
+              <td>{{athlete.nationalite}}</td>
+              <td>{{athlete.sport}}</td>
+              <td>{{athlete.dateNaissance | date:'dd/MM/yyyy'}}</td>
+              @if (athlete.equipe) {
+                <td>{{athlete.equipe.nomEquipe}}</td>
+              } @else {
+                <td>Individuel</td>
+              }
+              <!-- <td><a class="btn btn-danger" (click)="supprimerAthlete(athlete)">Supprimer</a></td>
+                   <td><a class="btn btn-success" [routerLink]="['/updateAthlete', athlete.idAthlete]">Modifier</a></td> -->
+            </tr>
+          </tbody>
+        }
+      </table>
+    </div>
+  </div>
+</div>
