@@ -1,0 +1,19 @@
+<div class="card shadow mb-3">
+  <div class="card-body">
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Rechercher un athlète par nom..."
+        [(ngModel)]="motCle"
+        (input)="chercher()"
+      />
+      <button class="btn btn-primary" (click)="chercher()">
+        🔍 Rechercher
+      </button>
+      <button class="btn btn-secondary" (click)="effacer()">
+        ✕ Effacer
+      </button>
+    </div>
+  </div>
+</div>

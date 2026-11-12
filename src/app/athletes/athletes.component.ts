@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Athlete } from '../model/athlete.model';
 import { AthleteService } from '../services/athlete.service';
+import { ChercherComponent } from '../chercher/chercher.component';
 
 @Component({
   selector: 'app-athletes',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, ChercherComponent],
   templateUrl: './athletes.component.html',
   styleUrl: './athletes.component.css'
 })
@@ -28,12 +28,13 @@ export class AthletesComponent implements OnInit {
     });
   }
 
-  rechercherAthletes(): void {
-    if (this.motCle.trim() === '') {
+  rechercherAthletes(motCle: string): void {
+    this.motCle = motCle;
+    if (motCle.trim() === '') {
       this.chargerAthletes();
       return;
     }
-    this.athleteService.rechercherAthletes(this.motCle).subscribe((data: any) => {
+    this.athleteService.rechercherAthletes(motCle).subscribe((data: any) => {
       this.athletes = data._embedded?.athletes ?? [];
     });
   }
@@ -42,7 +43,7 @@ export class AthletesComponent implements OnInit {
     let conf = confirm("Êtes-vous sûr ?");
     if (conf) {
       this.athleteService.supprimerAthlete(athlete.idAthlete).subscribe(() => {
-        this.rechercherAthletes();
+        this.rechercherAthletes(this.motCle);
       });
     }
   }

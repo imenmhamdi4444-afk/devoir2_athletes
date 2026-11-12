@@ -1,25 +1,7 @@
 <div class="container mt-4">
 
-  <!-- Barre de recherche -->
-  <div class="card shadow mb-3">
-    <div class="card-body">
-      <div class="input-group">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Rechercher un athlète par nom..."
-          [(ngModel)]="motCle"
-          (input)="rechercherAthletes()"
-        />
-        <button class="btn btn-primary" (click)="rechercherAthletes()">
-          🔍 Rechercher
-        </button>
-        <button class="btn btn-secondary" (click)="motCle=''; chargerAthletes()">
-          ✕ Effacer
-        </button>
-      </div>
-    </div>
-  </div>
+  <!-- Composant enfant : barre de recherche (émet motCleEvent vers le parent) -->
+  <app-chercher (motCleEvent)="rechercherAthletes($event)"></app-chercher>
 
   <!-- Tableau des athlètes -->
   <div class="card shadow mb-4">
@@ -59,4 +41,5 @@
       </table>
     </div>
   </div>
+
 </div>
