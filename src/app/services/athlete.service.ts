@@ -15,6 +15,7 @@ const httpOptions = {
 export class AthleteService {
   apiURL: string = 'http://localhost:8084/athletes/api';
   apiURLEq: string = 'http://localhost:8084/athletes/eq';
+  apiURLRest: string = 'http://localhost:8084/athletes/rest';
 
   constructor(private http: HttpClient) { }
 
@@ -47,5 +48,10 @@ export class AthleteService {
   consulterEquipe(id: number): Observable<Equipe> {
     const url = `${this.apiURLEq}/${id}`;
     return this.http.get<Equipe>(url);
+  }
+
+  rechercherAthletes(nom: string): Observable<any> {
+    const url = `${this.apiURLRest}/search/findByNomCompletContains?nom=${nom}`;
+    return this.http.get<any>(url);
   }
 }
